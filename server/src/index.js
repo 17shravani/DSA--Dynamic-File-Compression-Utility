@@ -10,9 +10,11 @@ import authRoutes from './routes/authRoutes.js';
 import discussionRoutes from './routes/discussionRoutes.js';
 import commentRoutes from './routes/commentRoutes.js';
 import messageRoutes from './routes/messageRoutes.js';
+import compressionRoutes from './routes/compressionRoutes.js';
 
 // Import Sockets
 import { setupSockets } from './sockets/chatSocket.js';
+import { setupCompressionSockets } from './sockets/compressionSocket.js';
 
 // Load Environment Variables
 dotenv.config();
@@ -36,12 +38,13 @@ app.use('/api/auth', authRoutes);
 app.use('/api/discussions', discussionRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/messages', messageRoutes);
+app.use('/api/compression', compressionRoutes);
 
 // Root Ping Route
 app.get('/', (req, res) => {
   res.json({
     status: 'healthy',
-    message: 'PulseNet API engine is humming along beautifully.',
+    message: 'DynaCompress & PulseNet API engine is humming along beautifully.',
     timestamp: new Date(),
   });
 });
@@ -62,6 +65,7 @@ const io = new Server(server, {
 
 // Setup Sockets
 setupSockets(io);
+setupCompressionSockets(io);
 
 // Connect to MongoDB & Start Server
 const PORT = process.env.PORT || 5000;
@@ -69,7 +73,9 @@ const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/pulsen
 
 console.log('🔄 Connecting to MongoDB...');
 mongoose
-  .connect(MONGODB_URI)
+  .connect(MONGODB_URI, {
+    bufferCommands: false,
+  })
   .then(() => {
     console.log('💚 Connected to MongoDB successfully!');
   })

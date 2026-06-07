@@ -1,6 +1,56 @@
 <!doctype html>
 <html lang="en" class="dark">
   <head>
+    <script>
+      window.addEventListener('error', function(event) {
+        var errDiv = document.getElementById('runtime-error-overlay');
+        if (!errDiv) {
+          errDiv = document.createElement('div');
+          errDiv.id = 'runtime-error-overlay';
+          errDiv.style.position = 'fixed';
+          errDiv.style.top = '0';
+          errDiv.style.left = '0';
+          errDiv.style.width = '100%';
+          errDiv.style.padding = '20px';
+          errDiv.style.background = '#7f1d1d';
+          errDiv.style.color = '#fecaca';
+          errDiv.style.zIndex = '999999';
+          errDiv.style.fontFamily = 'monospace';
+          errDiv.style.fontSize = '12px';
+          errDiv.style.whiteSpace = 'pre-wrap';
+          errDiv.style.overflowY = 'auto';
+          errDiv.style.maxHeight = '40vh';
+          errDiv.style.borderBottom = '4px solid #ef4444';
+          document.body.appendChild(errDiv);
+        }
+        var errMsg = (event.error ? (event.error.stack || event.error.message) : event.message);
+        errDiv.innerHTML = '<strong>[Unhandled Runtime Error]</strong><br/>' + errMsg + '<br/><br/>File: ' + event.filename + ':' + event.lineno + ':' + event.colno;
+      });
+      window.addEventListener('unhandledrejection', function(event) {
+        var errDiv = document.getElementById('runtime-error-overlay');
+        if (!errDiv) {
+          errDiv = document.createElement('div');
+          errDiv.id = 'runtime-error-overlay';
+          errDiv.style.position = 'fixed';
+          errDiv.style.top = '0';
+          errDiv.style.left = '0';
+          errDiv.style.width = '100%';
+          errDiv.style.padding = '20px';
+          errDiv.style.background = '#7f1d1d';
+          errDiv.style.color = '#fecaca';
+          errDiv.style.zIndex = '999999';
+          errDiv.style.fontFamily = 'monospace';
+          errDiv.style.fontSize = '12px';
+          errDiv.style.whiteSpace = 'pre-wrap';
+          errDiv.style.overflowY = 'auto';
+          errDiv.style.maxHeight = '40vh';
+          errDiv.style.borderBottom = '4px solid #ef4444';
+          document.body.appendChild(errDiv);
+        }
+        var errMsg = (event.reason ? (event.reason.stack || event.reason.message || event.reason) : 'Unknown reason');
+        errDiv.innerHTML = '<strong>[Unhandled Promise Rejection]</strong><br/>' + errMsg;
+      });
+    </script>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="https://api.dicebear.com/7.x/bottts/svg?seed=pulse" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

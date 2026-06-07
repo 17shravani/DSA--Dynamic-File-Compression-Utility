@@ -21,11 +21,11 @@ export default function Navbar() {
           
           {/* Logo Brand */}
           <Link to="/" className="flex items-center gap-2 group">
-            <div className="p-2 rounded-xl bg-gradient-to-tr from-brand-accent to-brand-cyan group-hover:rotate-12 transition-transform duration-300">
+            <div className="p-2 rounded-xl bg-gradient-to-tr from-purple-500 to-cyan-500 group-hover:rotate-12 transition-transform duration-300">
               <Flame className="w-5 h-5 text-white" />
             </div>
             <span className="text-xl font-bold tracking-tight outfit bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">
-              Pulse<span className="text-brand-accent">Net</span>
+              Dyna<span className="text-cyan-400">Compress</span>
             </span>
           </Link>
 
@@ -34,19 +34,10 @@ export default function Navbar() {
             <Link
               to="/"
               className={`text-sm font-medium transition-colors ${
-                location.pathname === '/' ? 'text-brand-accent' : 'text-brand-muted hover:text-white'
+                location.pathname === '/' ? 'text-cyan-400' : 'text-brand-muted hover:text-white'
               }`}
             >
-              Forums
-            </Link>
-            <Link
-              to="/chat"
-              className={`text-sm font-medium transition-colors flex items-center gap-1.5 ${
-                location.pathname === '/chat' ? 'text-brand-accent' : 'text-brand-muted hover:text-white'
-              }`}
-            >
-              <MessageSquare className="w-4 h-4" />
-              Live Workspace
+              Dashboard
             </Link>
           </div>
 

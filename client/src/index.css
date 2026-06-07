@@ -28,11 +28,8 @@
   background: #8b5cf6;
 }
 
-/* Premium Glowing Utilities */
 .glow-card {
-  background: rgba(30, 41, 59, 0.45);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: #111827; /* Solid premium dark slate */
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 

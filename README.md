@@ -1,328 +1,257 @@
-# 🪐 PulseNet: Real-Time Community Discussion Forum
+# 🪐 DynaCompress AI: Intelligent Lossless Compression & Cloud Telemetry Ecosystem
 
-PulseNet is a production-grade, highly responsive, full-stack community collaboration ecosystem that combines persistent forum threads (posts, recursive comments, tags, upvoting/downvoting) with sub-second, real-time workspace rooms (DMs, active presence tracking, typing notifications) powered by Node.js, Express, MongoDB, and WebSockets (Socket.io).
+DynaCompress AI is an enterprise-grade, content-aware lossless compression utility and SaaS analytics dashboard. It merges core **Data Structures & Algorithms (Huffman Coding)** with **modern production codecs (ZStandard, Brotli, Gzip, Bzip2, LZMA)** into a unified, self-optimizing engine. Guided by an **AI Multi-Agent Simulation**, the platform auto-tunes compression strategies in real time based on Shannon entropy and file-type heuristics to minimize storage footprints and cloud egress costs.
 
 ---
 
 ## 1. Project Explanation
 
 ### A. Simple Explanation
-Think of PulseNet as a powerful hybrid between **Reddit** and **Discord**. 
-* The **Reddit aspect** lets users publish structured posts, sort discussions with tag pills, and upvote/downvote ideas so the best insights rise to the top.
-* The **Discord aspect** offers sub-second live workspace chat rooms (like `#general` or `#dev-talk`) where active members can chat instantly, see typing bubbles, and watch who is currently online, all without reloading the page.
+Think of DynaCompress AI as a **smart data packer**. Different file types compress differently—packing text is different from packing database records or images. Rather than forcing you to manually choose compression settings (like choosing between Gzip, ZIP, or 7-Zip), DynaCompress AI profiles the file, automatically selects the best codec, and compresses it. It also includes an interactive **Huffman Sandbox** where you can type any text and watch the computer build the binary encoding tree step-by-step!
 
 ### B. Technical Explanation
-From a software engineering perspective, PulseNet is a dual-communication engine:
-* **Asynchronous Communication Layer**: Driven by a RESTful HTTP API (Express + MongoDB) that handles persistence, user authorization (JWT), tags filtering, and cascaded deletions. Mongoose pre-save middlewares calculate upvote/downvote scores dynamically before database saves.
-* **Synchronous Real-Time Communication Layer**: Powered by WebSockets (Socket.io). A persistent TCP connection keeps connection structures in memory, driving sub-second updates for active online lists (presence), message broadcasts, and typing loops.
+DynaCompress AI operates as a dual-engine architecture:
+1. **Strategic Multi-Codec Core**: Uses `mimetypes` and magic bytes to detect file formats, calculates Shannon entropy (measuring data randomness from `0.0` to `8.0` bits), and evaluates the printable ASCII ratio. A heuristic rule engine maps these parameters to an optimal plan (determining codec, compression level, block size, and worker threads) using streaming, memory-safe I/O loops.
+2. **DSA Pedagogical Engine**: A custom implementation of Huffman Coding from scratch. It builds a frequency table, populates a custom binary **Min-Heap (Priority Queue)**, merges nodes to construct a binary **Huffman Tree**, generates prefix-free binary codes, and packs the variable-length bits into bytearrays. It serializes the frequency table into a binary file header to ensure lossless decompression.
 
-### C. Workflow
-1. **User Registration** → 2. **Authentication (JWT Generation)** → 3. **Explore Dashboard** → 4. **Create Discussion Thread** → 5. **Engage with Comments** → 6. **Enter Live Workspace** → 7. **Instant Websockets Synchronization**
-
----
-
-## 2. Tech Stack Options
-
-| Feature | Option A: Easy | Option B: Intermediate (PulseNet Preferred) | Option C: Advanced |
-| :--- | :--- | :--- | :--- |
-| **Frontend** | HTML, CSS, Vanilla JS | **React, Tailwind CSS, Lucide Icons** | Next.js, Framer Motion, TypeScript |
-| **Backend** | Express.js, Local files | **Express.js, Node.js ES Modules** | NestJS, TypeScript, BullMQ |
-| **Database** | Local JSON Store | **MongoDB & Mongoose ODM** | PostgreSQL & Prisma ORM |
-| **Real-time** | AJAX Polling (Intervals) | **Socket.io WebSockets** | Socket.io + Redis Pub/Sub scale |
-
-> [!TIP]
-> **Why Option B is best for students:** Option B provides the exact industry-standard tech stack (MERN) expected by top-tier tech companies. It uses clean, modern ES Modules syntax rather than legacy CommonJS, and exposes students to true duplex communication (Socket.io) without introducing the deployment complexities of Redis queues or Kubernetes orchestration.
+### C. DSA Concept Mapping
+* **Priority Queue / Min Heap**: Tracks leaf nodes and merges the two lowest-frequency subtrees at each step ($O(N \log N)$ construction).
+* **Binary Trees**: Traverses the root-to-leaf paths to assign binary code strings ('0' for left, '1' for right).
+* **Hash Maps / Dictionaries**: Counts character frequencies in $O(N)$ time and maps characters to prefix codes in $O(1)$ lookups.
+* **Greedy Algorithm**: Merges the two smallest weights at each iteration to produce mathematically optimal prefix codes.
+* **Bit Manipulation**: Packs character bits into 8-bit bytes and handles bitwise padding offsets.
 
 ---
 
-## 3. Project Architecture
+## 2. Tech Stack
 
-### A. System Ecosystem
-* **client/**: Vite-based React Single Page Application (SPA) styled with Tailwind CSS dark-mode tokens. Uses React Router DOM for page navigation.
-* **server/**: Express.js REST API and Socket.io gateway engine. Connects to MongoDB to store users, threads, comments, and messages.
+| Layer | Technology | Rationale |
+| :--- | :--- | :--- |
+| **Frontend Dashboard** | React (Vite), Tailwind CSS, Lucide Icons | Glassmorphic dark-theme, responsive layouts, Canvas/SVG tree drawings. |
+| **Backend API Gateway** | Node.js, Express.js, Multer | Manages file uploads, spawns Python child processes, exposes REST paths. |
+| **Real-time Telemetry** | Socket.io WebSockets | Streams progress percentages and AI multi-agent simulation logs. |
+| **Database** | MongoDB & Mongoose ODM | Persists telemetry records, original/compressed sizes, and checksums. |
+| **Core Compression** | Python 3.10+, zstandard, brotli | Implements custom Huffman structures, zstd dictionaries, and system APIs. |
+| **Automated Testing** | Pytest | Evaluates heap states, codec roundtrips, and hash integrity. |
+
+---
+
+## 3. Product Architecture & Data Flow
 
 ```
-                  ┌────────────────────────────────────────┐
-                  │               CLIENT UI                │
-                  │    Vite React Single Page Application  │
-                  └──────┬──────────────────────────┬──────┘
-                         │                          │
-          HTTP / REST    │                          │   WebSockets (persistent)
-          JSON payloads  │                          │   typing, presence, msgs
-                         ▼                          ▼
-            ┌─────────────────────────┐   ┌─────────────────────────┐
-            │       API ENGINE        │   │      SOCKET GATEWAY     │
-            │     Express Server      │   │     Socket.io Node      │
-            └────────────┬────────────┘   └────────────┬────────────┘
-                         │                             │
-                         │   Mongoose ODM Queries      │  Direct broadcast
-                         ▼                             ▼
-                   ┌───────────┐                 ┌───────────┐
-                   │  DATABASE │ ◄───────────────┤   CACHE   │
-                   │  MongoDB  │  Persist log    │   Redis   │
-                   └───────────┘  optionally     └───────────┘
+                      ┌────────────────────────────────────────┐
+                      │          UI FRONTEND (React)           │
+                      │   Uploads file, starts visualizer,     │
+                      │   renders interactive Huffman tree     │
+                      └──────┬──────────────────────────▲──────┘
+                             │                          │
+                 File upload │                          │ Socket.io: Agent Logs,
+                 REST API    │                          │ Progress % Telemetry
+                             ▼                          │
+                      ┌─────────────────────────────────┴──────┐
+                      │          API BACKEND (Node)            │
+                      │   Saves upload, spawns Python CLI,     │
+                      │   updates MongoDB Compression Records  │
+                      └──────┬─────────────────────────────────┘
+                             │
+                             │ child_process.spawn()
+                             ▼
+ ┌─────────────────────────────────────────────────────────────────────────────┐
+ │                         PYTHON COMPRESSION ENGINE                           │
+ │                                                                             │
+ │  1. DETECTOR: Magic Bytes → MIME → sample stats → Shannon Entropy           │
+ │  2. STRATEGY SELECTOR: Heuristic mapping → Codec (zstd/br/gz) + Chunk size  │
+ │  3. COMPRESSOR/DECOMPRESSOR: Memory-safe chunked streams                    │
+ │  4. VERIFIER: Decompresses to temp buffer & checks SHA-256 integrity        │
+ │  5. HUFFMAN Sandbox: Emits Priority Queue and Node Merge Trace (JSON)       │
+ └─────────────────────────────────────────────────────────────────────────────┘
 ```
-
-### B. Core REST API Endpoints
-* **Authentication**:
-  * `POST /api/auth/register` - Create user profile & return token
-  * `POST /api/auth/login` - Authenticate credentials & return token
-  * `GET /api/auth/me` - Get current user profile (JWT protected)
-* **Forums**:
-  * `GET /api/discussions` - List threads (supports tags & search)
-  * `GET /api/discussions/:id` - Fetch detailed thread with author fields
-  * `POST /api/discussions` - Publish new discussion thread (protected)
-  * `POST /api/discussions/:id/vote` - Upvote/downvote thread (protected)
-  * `DELETE /api/discussions/:id` - Delete thread & comments (protected)
-* **Comments**:
-  * `GET /api/comments/discussion/:discussionId` - Get comments for thread
-  * `POST /api/comments` - Post comment (supports threaded parent replies)
-  * `POST /api/comments/:id/vote` - Upvote/downvote comment (protected)
-  * `DELETE /api/comments/:id` - Delete comment (protected)
-* **Messages**:
-  * `GET /api/messages/:channel` - Get channel chat history (protected)
 
 ---
 
 ## 4. Folder Structure
 
 ```
-Community-Discussion-Forum-RealTime-Chat/
+DynaCompress-AI/
 │
-├── client/                      # React SPA powered by Vite
-│   ├── public/                  # Static assets and placeholders
+├── client/                     # Vite React SPA Dashboard
 │   ├── src/
-│   │   ├── components/          # Reusable view cards (Navbar, ThreadCard, CommentSection)
-│   │   ├── pages/               # Routed pages (Login, Register, Dashboard, ChatRooms, CreateThread, ThreadDetail)
-│   │   ├── App.jsx              # Global AuthContext & Socket router mapping
-│   │   ├── index.css            # Tailwind directives and custom dark-mode scrollbars
-│   │   └── main.jsx             # React DOM root mounting
-│   ├── package.json             # Frontend dependency configuration
-│   ├── tailwind.config.js       # Premium theme customized tokens
-│   └── vite.config.js           # Proxy configurations for /api paths
+│   │   ├── components/         # Reusable dashboard panels
+│   │   │   ├── HuffmanVisualizer.jsx   # Step-by-step SVG tree renderer
+│   │   │   ├── AgentControlCenter.jsx  # Multi-agent simulation console
+│   │   │   └── MetricsDashboard.jsx    # Savings calculator & history table
+│   │   ├── pages/
+│   │   │   └── CompressionDashboard.jsx # Central workspace view
+│   │   └── App.jsx             # Main SPA routing
+│   └── package.json            # Frontend dependency configs
 │
-├── server/                      # Express backend & WebSockets server
+├── server/                     # Express API & WebSockets Gateway
 │   ├── src/
-│   │   ├── config/              # MongoDB and environment utilities
-│   │   ├── controllers/         # API business logics (Auth, Discussion, Comments, Messages)
-│   │   ├── middleware/          # JWT protect and role authorize filters
-│   │   ├── models/              # Mongoose schemas (User, Discussion, Comment, Message)
-│   │   ├── routes/              # Express endpoint routing maps
-│   │   ├── sockets/             # Socket.io connection and broadcast handlers
-│   │   └── index.js             # Main server entry file
-│   ├── .env                     # Local environment parameters (gitignored)
-│   ├── .env.example             # Env variables template
-│   └── package.json             # Backend dependency configuration
+│   │   ├── models/             # Mongoose schemas (CompressionRecord.js)
+│   │   ├── routes/             # REST mappings (compressionRoutes.js)
+│   │   ├── sockets/            # Socket.io listeners (compressionSocket.js)
+│   │   └── index.js            # Main server entry file
+│   └── package.json            # Backend dependency configs
 │
-└── README.md                    # Master documentation file
+├── src/                        # Python Compression Core Modules
+│   ├── detector.py             # File entropy & mime-type diagnostics
+│   ├── strategy.py             # Codec selection heuristic rules
+│   ├── huffman.py              # Custom Heap & Binary Tree Huffman codec
+│   ├── compress.py             # Streaming compression pipeline
+│   ├── decompress.py           # Stream decoding manager
+│   ├── verify.py               # Checksum integrity loops
+│   ├── dict_train.py           # ZStandard dictionary training
+│   ├── archive.py              # Directory tar-pipe streaming archiver
+│   └── test_dfc.py             # Pytest automated testing suite
+│
+├── input_files/                # Temp original uploads folder (Gitignored)
+├── compressed_files/           # Compressed outputs directory (Gitignored)
+├── decompressed_files/         # Restored files directory (Gitignored)
+├── main.py                     # Root CLI Entry Point
+├── requirements.txt            # Python requirements
+└── README.md                   # Product master documentation
 ```
 
 ---
 
-## 5. Phase-wise Implementation Plan
+## 5. Installation & Run Guide
 
-```mermaid
-graph TD
-  P1[Phase 1: Setup Workspace] --> P2[Phase 2: DB Modeling]
-  P2 --> P3[Phase 3: Auth & REST Endpoints]
-  P3 --> P4[Phase 4: Sockets Presence & Chat]
-  P4 --> P5[Phase 5: React Layouts & Contexts]
-  P5 --> P6[Phase 6: Live Workspace UI]
-  P6 --> P7[Phase 7: Review & Simulation]
-```
+### A. Prerequisites
+Ensure you have the following installed on your system:
+* **Node.js** (v18+)
+* **Python** (v3.10+)
+* **MongoDB** (running locally on port `27017` or configured via `.env`)
 
-### Phase 1: Workspace & Setup
-* **What**: Structure root workspaces, generate package files, and install server dependencies.
-* **Why**: Establishes correct boundaries and prevents importing mixed client/server libraries.
-* **Mistake to Avoid**: Mixing node modules in a single directory which creates dependency conflicts.
-
-### Phase 2: Mongoose Database Modeling
-* **What**: Code database schemas for Users, Discussions, Comments, and Messages with pre-save vote hook calculators.
-* **Why**: Strongly-typed schemas prevent inconsistent data saves to MongoDB.
-* **Mistake to Avoid**: Storing votes as simple numbers without binding user IDs, causing users to vote infinite times.
-
-### Phase 3: REST API & JWT Engine
-* **What**: Code registration, login, and CRUD endpoints with token verification middlewares.
-* **Why**: Establishes server-side authorization blocks before building any UI views.
-* **Mistake to Avoid**: Returning passwords in login query responses; always select `+password` explicitly inside auth controllers.
-
-### Phase 4: WebSockets Presence & Broadcasts
-* **What**: Establish Socket.io server with JWT verification interceptors. Manage rooms, typing broadcasts, and online presence arrays.
-* **Why**: Enables dual full-duplex communication alongside secure HTTP REST channels.
-* **Mistake to Avoid**: Broadcasting socket messages globally using `io.emit()` instead of scoping to channels with `io.to(channel).emit()`.
-
-### Phase 5: Client Foundations & Global Contexts
-* **What**: Configure Tailwind styling rules, router links, `AuthContext` status, and auto-connecting `SocketContext`.
-* **Why**: Prevents opening multiple sockets, keeping a single connection active per session.
-* **Mistake to Avoid**: Initializing socket clients globally outside React trees, causing connections to re-open on every page shift.
-
-### Phase 6: Thread Listing & Nested Conversations
-* **What**: Build feed lists, upvoting buttons, thread creators, and recursive nested comment blocks.
-* **Why**: Enables intuitive nested responses so users can discuss complex ideas logically.
-* **Mistake to Avoid**: Direct Mongoose deep nest lookups; populate root records and let React recursively render children.
-
-### Phase 7: Live Workspace Interface
-* **What**: Code a multi-panel workspace view displaying channels lists, message log screens, typing indicators, and user lists.
-* **Why**: Delivers a sub-second Slack/Discord-grade community experience.
-* **Mistake to Avoid**: Failing to scroll chat panels automatically on new message arrivals.
-
----
-
-## 6. Installation & Run Guide
-
-### A. Environment Variable Variables Configuration
-Create a `.env` file in the `/server` directory and paste:
-```env
-PORT=5000
-NODE_ENV=development
-MONGODB_URI=mongodb://127.0.0.1:27017/pulsenet
-JWT_SECRET=your_super_strong_secret_key_12345
-CLIENT_URL=http://localhost:5173
-```
-
-### B. Quick Launch Commands (Windows/Mac)
-You will need two terminal windows open:
-
-#### Terminal 1: Launch Backend Engine
+### B. Python Environment Setup
+Open your terminal in the project root directory and run:
 ```bash
-cd server
-npm install
-npm run dev
-```
-*Expected Server Output:*
-```
-🔄 Connecting to MongoDB...
-💚 Connected to MongoDB successfully!
-🚀 PulseNet Server running in development mode on http://localhost:5000
+# Install required compression and testing packages
+pip install -r requirements.txt
 ```
 
-#### Terminal 2: Launch React UI Web App
+### C. Launch Backend Server
+1. Navigate to the `/server` directory:
+   ```bash
+   cd server
+   npm install
+   ```
+2. Create a `.env` file inside `/server` (if not present) and configure:
+   ```env
+   PORT=5000
+   MONGODB_URI=mongodb://127.0.0.1:27017/dynacompress
+   CLIENT_URL=http://localhost:5173
+   ```
+3. Launch the server in development mode:
+   ```bash
+   npm run dev
+   ```
+
+### D. Launch Frontend Dashboard
+1. Open a new terminal window, navigate to the `/client` directory:
+   ```bash
+   cd client
+   npm install
+   ```
+2. Start the Vite React development server:
+   ```bash
+   npm run dev
+   ```
+3. Open your browser and navigate to `http://localhost:5173`.
+
+---
+
+## 6. How to Run via CLI (Terminal)
+
+You can also run all compression engine operations directly from the CLI via `main.py` at the root directory:
+
+### 1. Compress File
+Select strategy `mode` from: `auto`, `fast`, `balanced`, `max`, `dsa` (custom Huffman).
 ```bash
-cd client
-npm install
-npm run dev
+python main.py compress input_files/sample.txt --mode balanced
 ```
-*Expected Client Output:*
-```
-  VITE v5.2.8  ready in 234 ms
+*Outputs:* A compressed file `input_files/sample.txt.zst` and manifest `input_files/sample.txt.zst.dfc.json`.
 
-  ➜  Local:   http://localhost:5173/
-  ➜  Network: use --host to expose
+### 2. Decompress File
+```bash
+python main.py decompress compressed_files/sample.dfc --dst decompressed_files/restored.txt
 ```
 
-Open your browser and navigate to `http://localhost:5173` to explore the community workspace!
+### 3. Verify Checksum Integrity
+```bash
+python main.py verify compressed_files/sample.dfc.dfc.json
+```
+
+### 4. Train a Custom Zstd Dictionary
+```bash
+python main.py train-dict "input_files/*.txt" --size 114688 --out my_dictionary.dict
+```
+
+### 5. Archive and Compress Folder
+```bash
+python main.py archive input_files/my_folder --dst compressed_files/folder_archive.tar.zst
+```
 
 ---
 
-## 7. Virtual Simulation Guide
+## 7. Automated Verification Tests
 
-To simulate a real, lively community workspace, perform the following validation steps:
-
-1. **Simulate Signups**: Open `http://localhost:5173` and create two accounts in separate browser tabs (or use an Incognito tab):
-   * Account A: `developer_alice`
-   * Account B: `coder_bob`
-2. **Explore Presence**: Watch the **"Who's Online"** list update dynamically on both screens as each user logs in.
-3. **Forum Upvoting**: Log in as Alice, create a new discussion thread titled *"Scaling Socket.io rooms"*. Log in as Bob, upvote Alice's post, and watch the score climb from `0` to `1` in real-time.
-4. **Nested Conversations**: As Bob, comment on Alice's post. As Alice, reply directly to Bob's comment and see the collapsing indentation display perfectly.
-5. **Sub-second Workspace Chat**: Navigate both tabs to the **"Live Workspace"** section. Select `#dev-talk` channel:
-   * Type in Alice's tab. See `"developer_alice is typing..."` display on Bob's screen.
-   * Send a message. Watch the message bubble appear instantly on both screens.
+Run the comprehensive unit test suite using `pytest` from the root directory:
+```bash
+python -m pytest src/test_dfc.py -v
+```
+All 8 test cases verify heap operations, tree creation, binary encoding, and roundtrip compression of text/binary data without loss.
 
 ---
 
-## 8. GitHub Release & Showcasing Guidelines
+## 8. Virtual Simulation Flow
 
-### A. Prepare for Repository Upload
-* Keep `.env` strictly gitignored! Provide a clean `.env.example` in the directory so others know how to configure the app.
-* Write a clear commit history matching our day-wise strategy.
-
-### B. Suggested Git Repository Setup
-* **Name**: `pulsenet-realtime-community-forum`
-* **Description**: "A production-grade, highly responsive hybrid community platform combining persistent discussion forums with sub-second WebSocket chat workspaces, user presence, typing indicators, and threaded replies."
-* **Tags**: `mern-stack`, `websockets`, `socketio`, `mongodb`, `realtime-chat`, `nested-comments`
-
----
-
-## 9. Proof Building & Day-Wise Commit Strategy
-
-To build an impressive GitHub showcase, space out your commits to represent a methodical, logical software development cycle:
-
-* **Day 1: Setup and Initial Blueprints**
-  * `feat: initialize Vite React frontend and Express backend structures`
-* **Day 2: Mongoose Schemas and Models**
-  * `feat: implement User, Discussion, Comment and Message mongoose models`
-* **Day 3: JWT Security and Authentication APIs**
-  * `feat: complete registration, login, and JWT middleware handlers`
-* **Day 4: Forums and Thread CRUD APIs**
-  * `feat: complete list, create, and cascade deletion endpoints for discussions`
-* **Day 5: Voting and Threaded Comments REST Endpoints**
-  * `feat: build voting toggles and nested reply insertions controllers`
-* **Day 6: WebSockets Gateway Integration**
-  * `feat: build socket.io authenticated handlers with presence and typing loops`
-* **Day 7: Client Routes, Contexts and Styling Foundations**
-  * `feat: build dark-theme glassmorphism tokens, navbar, and auth context`
-* **Day 8: Forums Feed and Recursive Comments UI**
-  * `feat: complete discussion feed lists, thread editor, and recursive replies`
-* **Day 9: Live Multi-Panel Workspace View**
-  * `feat: complete workspace rooms, sub-second socket streams, and typing cues`
+To validate and showcase the platform's features:
+1. **Interactive Huffman Sandbox**:
+   * Navigate to the **Huffman Sandbox** tab.
+   * Input text like `BABBAGE` or `SUCCESS` and click **Visualize**.
+   * Click **Play** or step through with the arrow buttons to watch:
+     1. Characters counting and ranking.
+     2. Leaf nodes loading into the Priority Queue Heap.
+     3. Minimum items popping out and merging into binary parent nodes.
+     4. The complete binary tree drawing with codes.
+     5. The resulting compressed bitstream compared to standard ASCII bit widths.
+2. **Dynamic Pipeline upload**:
+   * Navigate to the **File Compression** tab.
+   * Drag in a text log file, choose **Balanced**, and click **Dispatch Compression Pipeline**.
+   * Watch the **Multi-Agent Command Console** output the logs from the *Strategy*, *Optimization*, *Compression*, *Security*, and *Telemetry* agents in real-time.
+   * Once finished, click **Verify Integrity** to confirm the SHA-256 signature matches.
+   * Check the **Analytics & Savings** tab to review the average compression ratios and estimate cloud storage bill savings.
 
 ---
 
-## 10. Submission Screenshot Checklist
+## 9. Day-Wise Proof Building Strategy
 
-Capture these visual proofs for your course submission:
-1. **Sign-up Interface**: Showing input validation rules and responsive dark design.
-2. **Forums Dashboard Feed**: Populated with mock discussion posts, tag pills, and searching inputs.
-3. **Thread Detail Page**: Displaying the author info panel, vote score, and nested conversation threads.
-4. **Live Workspace View**: Highlighting channel selections, message bubbles, and real-time typing indicators.
-5. **Real-time Presence Panel**: Revealing multiple connected users tracked via Socket.io.
-6. **MongoDB Compass View**: Showing user collections, posts, and message logs saved securely in the cloud or localhost.
-
----
-
-## 11. Interview Preparation (Q&A)
-
-### 1. Question: Explain your project.
-* **HR Response**: "PulseNet is a hybrid community collaboration hub that solves the problem of disconnected communication by bringing persistent forums and sub-second chat workspaces under a single platform. I built this using the MERN stack with modern ES modules, clean folder architecture, and visual glassmorphic layouts to showcase my abilities in building real-time collaboration platforms."
-* **Technical Response**: "The architecture separates synchronous REST endpoints from duplex WebSocket channels. The REST side uses Express and Mongoose to handle JWT authentication, thread lists with tag filters, and cascade comment deletions. The synchronous side uses Socket.io to manage connections, presence tracking, and typing indicator events in-memory. Pre-save Mongoose hooks handle vote score tallies on the fly."
-
-### 2. Question: How does user presence tracking work?
-* **Answer**: "On Socket.io connection, the client sends their JWT in the handshake. The server verifies the token, queries the user details, and stores the user inside a global in-memory object mapped to the socket ID. An update list event broadcasts the unique active user list to all connected clients. On socket disconnect, the record is purged and an updated presence broadcast is sent."
-
-### 3. Question: How did you implement recursive comments in the UI?
-* **Answer**: "The backend stores comments in a flat Mongoose collection where replies hold a `parentId` referencing another comment ID. The frontend fetches the comments in a flat array, and groups them dynamically. A recursive `CommentNode` component renders the comment, searches for its children, and mounts itself at a deeper visual nesting level until no children remain."
-
-### 4. Question: How do you handle password safety in database records?
-* **Answer**: "I use `bcryptjs` to encrypt password strings before saving them to the database, using Mongoose `pre-save` hooks. In the User Mongoose Schema definition, I set `select: false` on the password field. This ensures that any queries like `User.find()` or `.populate()` automatically exclude password strings unless explicitly requested via `.select('+password')`."
-
-### 5. Question: What are the benefits of WebSockets over standard HTTP polling?
-* **Answer**: "WebSockets establish a single, persistent TCP connection after a lightweight handshake, allowing duplex, sub-second data streaming with tiny overhead headers (approx. 2 bytes). HTTP polling requires client-side intervals firing HTTP requests repeatedly, creating massive server loads, parsing complex request headers, and introducing high latency."
-
-### 6. Question: How do you prevent voting scams (e.g. upvoting a thread ten times)?
-* **Answer**: "Instead of a simple integer score, votes are modeled as a sub-document array inside the Thread document. Each entry records the voter's `userId` and their `voteType` ('up' or 'down'). When voting, the server checks if the user's ID exists in the array. If it does, we toggle their vote type or remove it. Mongoose pre-save middlewares dynamically calculate the net integer score before writing to the database."
-
-### 7. Question: What challenges did you encounter and how did you resolve them?
-* **Answer**: "A primary challenge was preventing duplicate WebSockets from opening during page routing in React. I solved this by building a dedicated `SocketContext` wrapped around the React tree, linking the socket initialization directly to the user's authentication lifecycle inside a `useEffect` hook. This ensures exactly one persistent connection is maintained per authenticated session."
-
-### 8. Question: How would you scale PulseNet to handle millions of concurrent users?
-* **Answer**: "To scale, I would decouple the Socket.io server from the Express REST API into a microservice. I would place multiple socket server instances behind a load balancer and bind them with a Redis Pub/Sub adapter to sync broadcasts. Lastly, I would deploy database read-replicas, add sharding on MongoDB collections, and cache hot discussion threads in Redis."
-
-### 9. Question: Why did you decide to use Vite instead of Create-React-App (CRA)?
-* **Answer**: "CRA relies on Webpack, which bundles the entire code tree before server startup, resulting in slow rebuilds. Vite leverages native ES modules in the browser, compiling source code on-demand with ultra-fast Hot Module Replacement (HMR) powered by an underlying Esbuild engine. This creates a much faster and more modern developer experience."
-
-### 10. Question: How do you protect your database against SQL/NoSQL Injection?
-* **Answer**: "Mongoose naturally mitigates NoSQL injection by enforcing strongly-typed schemas, converting parameters into safe types (e.g. casting inputs to ObjectIds or Strings). Additionally, all parameters are validated and escaped using strict sanitization middleware, and Express JSON payload lengths are capped to prevent resource exhaustion attacks."
+Space out your commits to present a logical, industry-standard development lifecycle on GitHub:
+* **Day 1: Setup and CLI Blueprints**
+  * `feat: initialize folder structures and build property detector engine`
+* **Day 2: Custom Heap and Binary Tree Node**
+  * `feat: implement custom MinHeap and binary node classes for Huffman codec`
+* **Day 3: Huffman Bitstream Packing & Serialization**
+  * `feat: complete custom Huffman compression, bit packing, and header serialization`
+* **Day 4: Multi-Codec Compression and Dictionary Training**
+  * `feat: complete streaming compressor wrapper for zstd, brotli, gzip, bz2, and lzma`
+* **Day 5: Checksum Verification and Directory Archiving**
+  * `feat: complete SHA-256 roundtrip verifier and directory tar packer`
+* **Day 6: Automated Testing Suites**
+  * `test: construct pytest cases for heap, detector, strategy, and codecs`
+* **Day 7: API Wrapper Node endpoints**
+  * `feat: integrate Express router endpoints and multer upload managers`
+* **Day 8: WebSockets Multi-Agent Socket Gateways**
+  * `feat: build socket.io agent simulator logs and progress streams`
+* **Day 9: Animated Huffman Visualizer UI**
+  * `feat: implement interactive SVG tree layout builder and heap step tracer`
+* **Day 10: Financial Analytics & Cloud Savings Dashboard**
+  * `feat: build cost savings calculator, history logs, and final documentation`
 
 ---
 
-## 12. Startup Strategy & Monetization Blueprints
-
-PulseNet is engineered as a highly scalable SaaS platform targeting companies, coding academies, and student guilds.
-
-### A. Subscription Tiers
-1. **Tier 1: Starter (Free)** - Up to 100 forum members, default workspace channels, standard visual themes.
-2. **Tier 2: Team ($49/month)** - Unlimited forum threads, custom workspace channels, advanced search integration, moderate automations.
-3. **Tier 3: Enterprise ($199/month)** - Dedicated server node, custom logo branding, AI moderation dashboard, SSO authentication, and SLA uptimes.
-
-### B. Competitive Advantage
-Unlike Slack (which lacks threaded forum discovery) and Discourse (which lacks ephemeral instant chat rooms), PulseNet unites persistent knowledge bases and synchronous chat spaces in a unified, visually striking interface, cutting administrative software costs by 50%.
+## 10. Core Learning Outcomes
+* **Data Structure Implementation**: Building a binary heap and tree from scratch, mastering recursive traversals, pointers, and node structures.
+* **Greedy Algorithm Mastery**: Understanding how greedy selections yield mathematically optimal prefix encodings (lossless compression limits).
+* **System Design & API Orchestration**: Spawning child processes from a Node backend, streaming WebSocket events, and managing file system directory hooks.
+* **Telemetry & Analytics**: Logging compression ratios, speeds (MB/s), calculating Shannon entropy, and translating bytes into cloud storage cost savings.

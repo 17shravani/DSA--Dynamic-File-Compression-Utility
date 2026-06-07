@@ -24,3 +24,26 @@ Thumbs.db
 *.njsproj
 *.sln
 *.swp
+
+# Temporary Chrome profiles and logs
+chrome_profile/
+cp/
+chrome_log.txt
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Dynamic Compression payload inputs & outputs
+input_files/*
+!input_files/.gitkeep
+compressed_files/*
+!compressed_files/.gitkeep
+decompressed_files/*
+!decompressed_files/.gitkeep
+
+# Sandbox database
+server/sandbox_db.json

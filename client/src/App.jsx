@@ -5,7 +5,7 @@ import io from 'socket.io-client';
 // Pages
 import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
-import Dashboard from './pages/Dashboard.jsx';
+import CompressionDashboard from './pages/CompressionDashboard.jsx';
 import CreateThread from './pages/CreateThread.jsx';
 import ThreadDetail from './pages/ThreadDetail.jsx';
 import ChatRooms from './pages/ChatRooms.jsx';
@@ -85,12 +85,17 @@ export default function App() {
     });
 
     newSocket.on('receive_msg', (msg) => {
+      if (!msg) return;
       // Trigger a visual notification if the user is not in the chat page
       if (window.location.pathname !== '/chat') {
+        const senderName = msg.sender?.username || 'System';
+        const msgText = msg.text || '';
+        const channelName = msg.channel || 'general';
+        
         const notifyMsg = {
           id: Date.now(),
-          title: `New message in ${msg.channel}`,
-          description: `${msg.sender.username}: "${msg.text.substring(0, 30)}${msg.text.length > 30 ? '...' : ''}"`,
+          title: `New message in ${channelName}`,
+          description: `${senderName}: "${msgText.substring(0, 30)}${msgText.length > 30 ? '...' : ''}"`,
           type: 'chat',
         };
         setNotifications((prev) => [notifyMsg, ...prev].slice(0, 10)); // Keep max 10 notifications
@@ -123,7 +128,7 @@ export default function App() {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-brand-bg">
         <div className="w-12 h-12 border-4 border-brand-accent border-t-transparent rounded-full animate-spin"></div>
-        <p className="mt-4 text-brand-muted text-sm tracking-wide">Initializing PulseNet intelligence engine...</p>
+        <p className="mt-4 text-brand-muted text-sm tracking-wide">Initializing DynaCompress AI engine...</p>
       </div>
     );
   }
@@ -147,7 +152,7 @@ export default function App() {
                 />
 
                 {/* Discussions Feed (Public Read / Protected Write) */}
-                <Route path="/" element={<Dashboard />} />
+                <Route path="/" element={<CompressionDashboard />} />
                 <Route path="/thread/:id" element={<ThreadDetail />} />
 
                 {/* Authenticated Workspace Pages */}
