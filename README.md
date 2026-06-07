@@ -1,4 +1,5 @@
 # 🪐 DynaCompress AI: Intelligent Lossless Compression & Cloud Telemetry Ecosystem
+<img width="1912" height="915" alt="Screenshot 2026-06-07 102945" src="https://github.com/user-attachments/assets/600eb137-13d0-4735-a807-22882e5cda3c" />
 
 DynaCompress AI is an enterprise-grade, content-aware lossless compression utility and SaaS analytics dashboard. It merges core **Data Structures & Algorithms (Huffman Coding)** with **modern production codecs (ZStandard, Brotli, Gzip, Bzip2, LZMA)** into a unified, self-optimizing engine. Guided by an **AI Multi-Agent Simulation**, the platform auto-tunes compression strategies in real time based on Shannon entropy and file-type heuristics to minimize storage footprints and cloud egress costs.
 
